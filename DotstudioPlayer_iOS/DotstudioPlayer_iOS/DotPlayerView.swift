@@ -87,7 +87,7 @@ public class DotPlayerView: UIView {
     }
     
     public func set(strVideoUrl: String) {
-        let strVideoUrl_ = "https://k7q5a5e5.ssl.hwcdn.net/files/company/53fd1266d66da833047b23c6/assets/videos/540f28fdd66da89e1ed70281/vod/540f28fdd66da89e1ed70281.m3u8" //http://static.videokart.ir/clip/100/480.mp4"
+        let strVideoUrl_ = strVideoUrl //"https://k7q5a5e5.ssl.hwcdn.net/files/company/53fd1266d66da833047b23c6/assets/videos/540f28fdd66da89e1ed70281/vod/540f28fdd66da89e1ed70281.m3u8" //http://static.videokart.ir/clip/100/480.mp4"
         if let url : URL = URL(string: strVideoUrl_) {
             let player = AVPlayer(url: url)
 //            let playerLayer = AVPlayerLayer(player: player)
