@@ -24,6 +24,7 @@ public class DotPlayerView: UIView {
     let playerController = AVPlayerViewController()
     var player : AVPlayer?
     @IBOutlet weak var label: UILabel!
+    var isFullScreen: Bool = false
     
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,30 +33,31 @@ public class DotPlayerView: UIView {
     }
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        //setUpView()
+        //setUpView() //called when setup from storyboard class
         commonInit()
     }
 
     public func getTestString() -> String {
         return "DotPlayer String"
     }
-    private func setUpView() {
-        let bundle = Bundle(for: type(of: self))
-        let nib = UINib(nibName: self.nibName, bundle: bundle)
-        self.contentView = nib.instantiate(withOwner: self, options: nil).first as! UIView
-        addSubview(contentView)
-        
-        contentView.center = self.center
-        contentView.frame = self.bounds
-        contentView.autoresizingMask = []
-        contentView.translatesAutoresizingMaskIntoConstraints = true
-    }
-    func loadNib() -> UIView {
-        let bundle = Bundle(for: type(of: self))
-//        let nibName = type(of: self).description().components(separatedBy: ".").last!
-        let nib = UINib(nibName: self.nibName, bundle: bundle)
-        return nib.instantiate(withOwner: self, options: nil).first as! UIView
-    }
+//    private func setUpView() {
+//        let bundle = Bundle(for: type(of: self))
+//        let nib = UINib(nibName: self.nibName, bundle: bundle)
+//        self.contentView = nib.instantiate(withOwner: self, options: nil).first as! UIView
+//        addSubview(contentView)
+//
+//        contentView.center = self.center
+//        contentView.frame = self.bounds
+//        contentView.autoresizingMask = []
+//        contentView.translatesAutoresizingMaskIntoConstraints = true
+//    }
+//    func loadNib() -> UIView {
+//        let bundle = Bundle(for: type(of: self))
+////        let nibName = type(of: self).description().components(separatedBy: ".").last!
+//        let nib = UINib(nibName: self.nibName, bundle: bundle)
+//        return nib.instantiate(withOwner: self, options: nil).first as! UIView
+//    }
+    
     private func commonInit() {
         //let bundle = Bundle(for: type(of: self))
 //        Bundle.main.loadNibNamed("DotPlayerView", owner: self, options: nil)
@@ -65,8 +67,8 @@ public class DotPlayerView: UIView {
         self.contentView = nib.instantiate(withOwner: self, options: nil).first as! UIView
         addSubview(contentView)
         
-        contentView.frame = self.bounds
-        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.contentView.frame = self.bounds
+        self.contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
     
     public func set(strVideoUrl: String) {
@@ -83,6 +85,7 @@ public class DotPlayerView: UIView {
             
             self.playerController.showsPlaybackControls = false
             self.contentView.addSubview(playerController.view)
+            self.contentView.sendSubview(toBack: playerController.view)
             playerController.view.frame = self.contentView.frame
             
         }
@@ -95,7 +98,28 @@ public class DotPlayerView: UIView {
         self.player?.pause()
     }
     
+    func toggleFullscreen() {
+        self.isFullScreen = !self.isFullScreen
+        if self.isFullScreen {
+            if let window = self.window {
+                self.playerController.view.removeFromSuperview()
+                window.addSubview(self.playerController.view)
+                self.playerController.view.frame = window.bounds
+            }
+        } else {
+            self.playerController.view.removeFromSuperview()
+            self.contentView.addSubview(playerController.view)
+            playerController.view.frame = self.contentView.frame
+        }
+    }
 }
+
+extension DotPlayerView: DotPlayerControlsViewDelegate {
+    func didTriggerActionForExpandButton(_ sender: Any) {
+        self.toggleFullscreen()
+    }
+}
+
 
 
 
