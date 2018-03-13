@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -20,123 +21,15 @@
         <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iN0-l3-epB" userLabel="Player View">
             <rect key="frame" x="0.0" y="0.0" width="640" height="360"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Foa-id-6kg" customClass="DotPlayerControlsView" customModule="DotstudioPlayer_iOS" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="640" height="360"/>
-                    <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yhN-Rc-txR" customClass="EZYGradientView" customModule="AmericanBeautyStar" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="320" width="640" height="40"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jIN-BB-Wfc">
-                                    <rect key="frame" x="10" y="13" width="27" height="15"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                    <variation key="heightClass=regular-widthClass=regular">
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                    </variation>
-                                </label>
-                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="r8V-cj-y11">
-                                    <rect key="frame" x="45" y="5" width="478" height="31"/>
-                                </slider>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MA3-VT-CDu">
-                                    <rect key="frame" x="531" y="13" width="27" height="15"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                    <variation key="heightClass=regular-widthClass=regular">
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                    </variation>
-                                </label>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eTk-yf-W3m" userLabel="CC button">
-                                    <rect key="frame" x="558" y="0.0" width="40" height="40"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="40" id="y9S-nL-cbM">
-                                            <variation key="heightClass=regular-widthClass=regular" constant="80"/>
-                                        </constraint>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="18"/>
-                                    <state key="normal" image="play"/>
-                                    <variation key="heightClass=regular-widthClass=regular">
-                                        <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="27"/>
-                                    </variation>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OBQ-CC-0cq">
-                                    <rect key="frame" x="598" y="0.0" width="40" height="40"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" secondItem="OBQ-CC-0cq" secondAttribute="height" multiplier="1:1" id="Iqe-vS-zNy"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="26"/>
-                                    <state key="normal" image="play"/>
-                                    <variation key="heightClass=regular-widthClass=regular">
-                                        <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="32"/>
-                                    </variation>
-                                    <connections>
-                                        <action selector="didTriggerActionForExpandButton:" destination="DST-Tj-lBd" eventType="primaryActionTriggered" id="TMq-VE-fzl"/>
-                                    </connections>
-                                </button>
-                            </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.30947666952054792" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="40" id="5Pn-ES-n40">
-                                    <variation key="heightClass=regular-widthClass=regular" constant="60"/>
-                                </constraint>
-                                <constraint firstItem="OBQ-CC-0cq" firstAttribute="height" secondItem="yhN-Rc-txR" secondAttribute="height" id="8Nn-pG-vcF"/>
-                                <constraint firstItem="eTk-yf-W3m" firstAttribute="height" secondItem="yhN-Rc-txR" secondAttribute="height" id="8Sn-ch-AWZ"/>
-                                <constraint firstItem="MA3-VT-CDu" firstAttribute="centerY" secondItem="yhN-Rc-txR" secondAttribute="centerY" id="BIP-ii-6b4"/>
-                                <constraint firstItem="eTk-yf-W3m" firstAttribute="centerY" secondItem="yhN-Rc-txR" secondAttribute="centerY" id="InH-WD-bEK"/>
-                                <constraint firstItem="MA3-VT-CDu" firstAttribute="leading" secondItem="r8V-cj-y11" secondAttribute="trailing" constant="10" id="S4q-ro-86W">
-                                    <variation key="heightClass=regular-widthClass=regular" constant="20"/>
-                                </constraint>
-                                <constraint firstItem="jIN-BB-Wfc" firstAttribute="centerY" secondItem="yhN-Rc-txR" secondAttribute="centerY" id="VNd-Gj-AW6"/>
-                                <constraint firstItem="jIN-BB-Wfc" firstAttribute="leading" secondItem="yhN-Rc-txR" secondAttribute="leading" constant="10" id="c8H-mq-kQw">
-                                    <variation key="heightClass=regular-widthClass=regular" constant="20"/>
-                                </constraint>
-                                <constraint firstAttribute="trailing" secondItem="OBQ-CC-0cq" secondAttribute="trailing" constant="2" id="d9F-Wc-aUD">
-                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
-                                </constraint>
-                                <constraint firstItem="OBQ-CC-0cq" firstAttribute="leading" secondItem="eTk-yf-W3m" secondAttribute="trailing" id="dpL-KT-V3Q">
-                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
-                                </constraint>
-                                <constraint firstItem="r8V-cj-y11" firstAttribute="centerY" secondItem="yhN-Rc-txR" secondAttribute="centerY" id="pL9-Yo-ZrB"/>
-                                <constraint firstItem="OBQ-CC-0cq" firstAttribute="centerY" secondItem="yhN-Rc-txR" secondAttribute="centerY" id="uFt-aX-YtW"/>
-                                <constraint firstItem="r8V-cj-y11" firstAttribute="leading" secondItem="jIN-BB-Wfc" secondAttribute="trailing" constant="10" id="v1i-wL-ygP">
-                                    <variation key="heightClass=regular-widthClass=regular" constant="20"/>
-                                </constraint>
-                                <constraint firstItem="eTk-yf-W3m" firstAttribute="leading" secondItem="MA3-VT-CDu" secondAttribute="trailing" id="vKx-e9-4DY">
-                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
-                                </constraint>
-                            </constraints>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="fadeIntensity">
-                                    <real key="value" value="1"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                        </view>
-                    </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="trailing" secondItem="yhN-Rc-txR" secondAttribute="trailing" id="1yx-31-8fP"/>
-                        <constraint firstAttribute="bottom" secondItem="yhN-Rc-txR" secondAttribute="bottom" id="9Ce-NO-TnI"/>
-                        <constraint firstItem="yhN-Rc-txR" firstAttribute="leading" secondItem="Foa-id-6kg" secondAttribute="leading" id="vok-Vn-CAI"/>
-                    </constraints>
-                </view>
-            </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-            <constraints>
-                <constraint firstItem="Foa-id-6kg" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="DuG-9w-gom"/>
-                <constraint firstAttribute="trailing" secondItem="Foa-id-6kg" secondAttribute="trailing" id="fBM-T7-yZH"/>
-                <constraint firstAttribute="bottom" secondItem="Foa-id-6kg" secondAttribute="bottom" id="sV5-Dt-Qfm"/>
-                <constraint firstItem="Foa-id-6kg" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="tMd-AL-zqu"/>
-            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="-34" y="-30"/>
         </view>
-        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="DST-Tj-lBd" customClass="DotPlayerControlsView" customModule="DotstudioPlayer_iOS" customModuleProvider="target">
+        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="DST-Tj-lBd" customClass="DotRegularPlayerControlsView" customModule="DotstudioPlayer_iOS" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="640" height="360"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5mK-po-Nm9" customClass="EZYGradientView" customModule="AmericanBeautyStar" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5mK-po-Nm9" customClass="EZYGradientView" customModule="DotstudioPlayer_iOS" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="320" width="640" height="40"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gxN-Ic-rTb">
@@ -233,10 +126,96 @@
                 <constraint firstItem="5mK-po-Nm9" firstAttribute="leading" secondItem="DST-Tj-lBd" secondAttribute="leading" id="XVg-bD-ZHh"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-730" y="430"/>
+        </view>
+        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="UeI-JQ-ap0" customClass="DotLivePlayerControlsView" customModule="DotstudioPlayer_iOS" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="640" height="360"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KpE-Q1-3XC" customClass="EZYGradientView" customModule="DotstudioPlayer_iOS" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="320" width="640" height="40"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cld-PR-OFq" userLabel="Play Icon">
+                            <rect key="frame" x="10" y="10" width="20" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="20" id="YN3-sw-dEP">
+                                    <variation key="heightClass=regular-widthClass=regular" constant="30"/>
+                                </constraint>
+                                <constraint firstAttribute="width" secondItem="cld-PR-OFq" secondAttribute="height" multiplier="1:1" id="bQz-Gs-j2N"/>
+                            </constraints>
+                            <state key="normal" image="play-icon"/>
+                            <connections>
+                                <action selector="didTriggerActionForPlayButton:" destination="UeI-JQ-ap0" eventType="primaryActionTriggered" id="Qh8-cT-blg"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LIVE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="scG-ef-5m3">
+                            <rect key="frame" x="40" y="13" width="25.5" height="15"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <directionalEdgeInsets key="directionalLayoutMargins" top="8" leading="10" bottom="8" trailing="10"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <nil key="highlightedColor"/>
+                            <variation key="heightClass=regular-widthClass=regular">
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            </variation>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Now Playing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajx-sT-TGA">
+                            <rect key="frame" x="75.5" y="13" width="69.5" height="15"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                            <variation key="heightClass=regular-widthClass=regular">
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            </variation>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LGG-ao-ZKj" userLabel="Expand button">
+                            <rect key="frame" x="610" y="10" width="20" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="OZ6-H0-fRA">
+                                    <variation key="heightClass=regular-widthClass=regular" constant="30"/>
+                                </constraint>
+                                <constraint firstAttribute="width" secondItem="LGG-ao-ZKj" secondAttribute="height" multiplier="1:1" id="ntP-16-CMp"/>
+                            </constraints>
+                            <state key="normal" image="expand-icon"/>
+                            <connections>
+                                <action selector="didTriggerActionForExpandButton:" destination="UeI-JQ-ap0" eventType="primaryActionTriggered" id="dw3-Hh-MfX"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="ajx-sT-TGA" firstAttribute="centerY" secondItem="KpE-Q1-3XC" secondAttribute="centerY" id="Dwv-rq-LP4"/>
+                        <constraint firstAttribute="trailing" secondItem="LGG-ao-ZKj" secondAttribute="trailing" constant="10" id="HOG-qR-XrK"/>
+                        <constraint firstItem="scG-ef-5m3" firstAttribute="centerY" secondItem="KpE-Q1-3XC" secondAttribute="centerY" id="K0Q-17-XX9"/>
+                        <constraint firstAttribute="height" constant="40" id="W3p-3f-jcf">
+                            <variation key="heightClass=regular-widthClass=regular" constant="60"/>
+                        </constraint>
+                        <constraint firstItem="ajx-sT-TGA" firstAttribute="leading" secondItem="scG-ef-5m3" secondAttribute="trailing" constant="10" id="ea4-RW-lWw"/>
+                        <constraint firstItem="scG-ef-5m3" firstAttribute="leading" secondItem="cld-PR-OFq" secondAttribute="trailing" constant="10" id="hH0-vo-zsp"/>
+                        <constraint firstItem="cld-PR-OFq" firstAttribute="centerY" secondItem="KpE-Q1-3XC" secondAttribute="centerY" id="kcN-zB-IYt"/>
+                        <constraint firstItem="LGG-ao-ZKj" firstAttribute="centerY" secondItem="KpE-Q1-3XC" secondAttribute="centerY" id="qBD-Ck-yBw"/>
+                        <constraint firstItem="cld-PR-OFq" firstAttribute="leading" secondItem="KpE-Q1-3XC" secondAttribute="leading" constant="10" id="zKB-Ti-OOj"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="fadeIntensity">
+                            <real key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="KpE-Q1-3XC" secondAttribute="bottom" id="PVD-cG-np3"/>
+                <constraint firstItem="KpE-Q1-3XC" firstAttribute="leading" secondItem="UeI-JQ-ap0" secondAttribute="leading" id="bcu-Ki-L7P"/>
+                <constraint firstAttribute="trailing" secondItem="KpE-Q1-3XC" secondAttribute="trailing" id="wLG-zH-ycR"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="gU2-wv-w6s"/>
             <point key="canvasLocation" x="144" y="711"/>
         </view>
     </objects>
     <resources>
+        <image name="expand-icon" width="40" height="40"/>
         <image name="play" width="16" height="16"/>
+        <image name="play-icon" width="700" height="700"/>
     </resources>
 </document>

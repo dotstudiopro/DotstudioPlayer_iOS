@@ -10,10 +10,11 @@ import UIKit
 
 protocol DotPlayerControlsViewDelegate {
     func didTriggerActionForExpandButton(_ sender: Any)
+    func didTriggerActionForPlayButton(_ sender: Any)
 }
 
 class DotPlayerControlsView: UIView {
-    var delegate: DotPlayerControlsViewDelegate?
+//    var delegate: DotPlayerControlsViewDelegate?
 
     /*
     // Only override draw() if you perform custom drawing.
@@ -24,7 +25,10 @@ class DotPlayerControlsView: UIView {
     */
     @IBAction func didTriggerActionForExpandButton(_ sender: Any) {
         print("Expand Button Action Triggered.")
-        self.delegate?.didTriggerActionForExpandButton(self)
+        //self.delegate?.didTriggerActionForExpandButton(self)
     }
-    
+    @IBAction func didTriggerActionForPlayButton(_ sender: Any) {
+        print("play Button Action Triggered.")
+    }
+
 }

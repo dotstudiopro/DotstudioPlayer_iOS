@@ -9,6 +9,14 @@
 import UIKit
 import AVKit
 
+
+enum DotPlayerNibViewType: Int {
+    case mainView = 0
+    case regularControlsView = 1
+    case liveControlsView = 2
+//    case regularControlsView = 3
+}
+
 public class DotPlayerView: UIView {
 
     /*
@@ -26,6 +34,8 @@ public class DotPlayerView: UIView {
     @IBOutlet weak var label: UILabel!
     var isFullScreen: Bool = false
     
+    var viewLivePlayerControls: UIView?
+    
     override public init(frame: CGRect) {
         super.init(frame: frame)
         //setUpView()
@@ -37,6 +47,10 @@ public class DotPlayerView: UIView {
         commonInit()
     }
 
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        self.viewLivePlayerControls?.frame = self.playerController.view.bounds
+    }
     public func getTestString() -> String {
         return "DotPlayer String"
     }
@@ -80,16 +94,57 @@ public class DotPlayerView: UIView {
 //            self.contentView.layer.addSublayer(playerLayer)
             self.player = player
             
-            playerController.player = player
+            self.playerController.player = player
 //            self.addChildViewController(playerController)
             
             self.playerController.showsPlaybackControls = false
             self.contentView.addSubview(playerController.view)
-            self.contentView.sendSubview(toBack: playerController.view)
-            playerController.view.frame = self.contentView.frame
+//            self.contentView.sendSubview(toBack: playerController.view)
+            self.playerController.view.frame = self.contentView.frame
             
+            self.addControlsContentView()
         }
     }
+    
+    func addControlsContentView() {
+//        self.addRegularPlayerControlsContentView()
+        self.addLivePlayerControlsContentView()
+    }
+    func addRegularPlayerControlsContentView() {
+        
+    }
+    func addLivePlayerControlsContentView() {
+        let bundle = Bundle(for: type(of: self))
+        let nib = UINib(nibName: self.nibName, bundle: bundle)
+        if let views = nib.instantiate(withOwner: self, options: nil) as? [UIView] {
+            if views.count > 2 {
+                if let viewLivePlayerControls = views[2] as? DotLivePlayerControlsView {
+                    self.viewLivePlayerControls = viewLivePlayerControls
+                    viewLivePlayerControls.delegate = self
+                    if let contentOverlayView = self.playerController.contentOverlayView {
+                        
+                        contentOverlayView.addSubview(viewLivePlayerControls)
+                        viewLivePlayerControls.frame = self.playerController.view.bounds //self.playerController.view.bounds
+//                        self.addConstraint(viewLivePlayerControls, superView: self.playerController.view)
+                    }
+                }
+                //viewLivePlayerControls.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            }
+        }
+    }
+    
+    
+    func addConstraint(_ subView: UIView, superView: UIView) {
+        // Width constraint, half of parent view width
+        superView.addConstraints([
+            NSLayoutConstraint(item: subView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: superView, attribute: NSLayoutAttribute.width, multiplier: 1.0, constant: 0),
+            NSLayoutConstraint(item: subView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: superView, attribute: NSLayoutAttribute.height, multiplier: 1.0, constant: 0),
+            NSLayoutConstraint(item: subView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: superView, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0),
+            NSLayoutConstraint(item: subView, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: superView, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: 0)
+            
+            ])
+    }
+
     public func play() {
         self.player?.play()
     }
@@ -105,16 +160,23 @@ public class DotPlayerView: UIView {
                 self.playerController.view.removeFromSuperview()
                 window.addSubview(self.playerController.view)
                 self.playerController.view.frame = window.bounds
+                let value = UIInterfaceOrientation.landscapeLeft.rawValue
+                UIDevice.current.setValue(value, forKey: "orientation")
             }
         } else {
             self.playerController.view.removeFromSuperview()
             self.contentView.addSubview(playerController.view)
             playerController.view.frame = self.contentView.frame
+            let value = UIInterfaceOrientation.portrait.rawValue
+            UIDevice.current.setValue(value, forKey: "orientation")
         }
     }
 }
 
-extension DotPlayerView: DotPlayerControlsViewDelegate {
+extension DotPlayerView: DotLivePlayerControlsViewDelegate {
+    func didTriggerActionForPlayButton(_ sender: Any) {
+        print("play button triggered")
+    }
     func didTriggerActionForExpandButton(_ sender: Any) {
         self.toggleFullscreen()
     }
