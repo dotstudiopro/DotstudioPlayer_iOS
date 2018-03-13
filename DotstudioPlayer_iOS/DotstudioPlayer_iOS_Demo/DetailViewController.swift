@@ -29,13 +29,17 @@ class DetailViewController: UIViewController {
 //        self.viewPlayer.bringSubview(toFront: dotPlayerView)
 //        dotPlayerView.play()
         self.dotPlayerView.set(strVideoUrl: "vid url")
-        self.dotPlayerView.play()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         configureView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.dotPlayerView.play()
     }
 
     override func didReceiveMemoryWarning() {

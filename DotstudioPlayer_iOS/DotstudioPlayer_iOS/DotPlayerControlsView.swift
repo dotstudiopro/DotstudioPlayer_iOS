@@ -16,6 +16,8 @@ protocol DotPlayerControlsViewDelegate {
 class DotPlayerControlsView: UIView {
 //    var delegate: DotPlayerControlsViewDelegate?
 
+    @IBOutlet weak var buttonPlay: UIButton?
+    @IBOutlet weak var buttonExpand: UIButton?
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

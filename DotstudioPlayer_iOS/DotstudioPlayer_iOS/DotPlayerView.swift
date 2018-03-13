@@ -34,7 +34,8 @@ public class DotPlayerView: UIView {
     @IBOutlet weak var label: UILabel!
     var isFullScreen: Bool = false
     
-    var viewLivePlayerControls: UIView?
+    var viewLivePlayerControls: DotLivePlayerControlsView?
+    var isPlaying: Bool = false
     
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -147,10 +148,16 @@ public class DotPlayerView: UIView {
 
     public func play() {
         self.player?.play()
+        self.isPlaying = true
+//        self.viewLivePlayerControls?.buttonPlay?.setImage(#imageLiteral(resourceName: "pause-icon"), for: .normal)
+        self.viewLivePlayerControls?.buttonPlay?.isSelected = true
     }
     
     public func stop() {
         self.player?.pause()
+        self.isPlaying = false
+//        self.viewLivePlayerControls?.buttonPlay?.setImage(#imageLiteral(resourceName: "play-icon"), for: .normal)
+        self.viewLivePlayerControls?.buttonPlay?.isSelected = false
     }
     
     func toggleFullscreen() {
@@ -176,6 +183,11 @@ public class DotPlayerView: UIView {
 extension DotPlayerView: DotLivePlayerControlsViewDelegate {
     func didTriggerActionForPlayButton(_ sender: Any) {
         print("play button triggered")
+        if self.isPlaying {
+            self.stop()
+        } else {
+            self.play()
+        }
     }
     func didTriggerActionForExpandButton(_ sender: Any) {
         self.toggleFullscreen()
