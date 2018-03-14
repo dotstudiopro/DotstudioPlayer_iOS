@@ -139,10 +139,10 @@
                     <rect key="frame" x="0.0" y="320" width="640" height="40"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cld-PR-OFq" userLabel="Play Icon">
-                            <rect key="frame" x="10" y="10" width="20" height="20"/>
+                            <rect key="frame" x="5" y="7.5" width="25" height="25"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="20" id="YN3-sw-dEP">
-                                    <variation key="heightClass=regular-widthClass=regular" constant="30"/>
+                                <constraint firstAttribute="width" constant="25" id="YN3-sw-dEP">
+                                    <variation key="heightClass=regular-widthClass=regular" constant="40"/>
                                 </constraint>
                                 <constraint firstAttribute="width" secondItem="cld-PR-OFq" secondAttribute="height" multiplier="1:1" id="bQz-Gs-j2N"/>
                             </constraints>
@@ -172,10 +172,10 @@
                             </variation>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LGG-ao-ZKj" userLabel="Expand button">
-                            <rect key="frame" x="610" y="10" width="20" height="20"/>
+                            <rect key="frame" x="605" y="7.5" width="25" height="25"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="20" id="OZ6-H0-fRA">
-                                    <variation key="heightClass=regular-widthClass=regular" constant="30"/>
+                                <constraint firstAttribute="height" constant="25" id="OZ6-H0-fRA">
+                                    <variation key="heightClass=regular-widthClass=regular" constant="40"/>
                                 </constraint>
                                 <constraint firstAttribute="width" secondItem="LGG-ao-ZKj" secondAttribute="height" multiplier="1:1" id="ntP-16-CMp"/>
                             </constraints>
@@ -197,7 +197,7 @@
                         <constraint firstItem="scG-ef-5m3" firstAttribute="leading" secondItem="cld-PR-OFq" secondAttribute="trailing" constant="10" id="hH0-vo-zsp"/>
                         <constraint firstItem="cld-PR-OFq" firstAttribute="centerY" secondItem="KpE-Q1-3XC" secondAttribute="centerY" id="kcN-zB-IYt"/>
                         <constraint firstItem="LGG-ao-ZKj" firstAttribute="centerY" secondItem="KpE-Q1-3XC" secondAttribute="centerY" id="qBD-Ck-yBw"/>
-                        <constraint firstItem="cld-PR-OFq" firstAttribute="leading" secondItem="KpE-Q1-3XC" secondAttribute="leading" constant="10" id="zKB-Ti-OOj"/>
+                        <constraint firstItem="cld-PR-OFq" firstAttribute="leading" secondItem="KpE-Q1-3XC" secondAttribute="leading" constant="5" id="zKB-Ti-OOj"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="fadeIntensity">
