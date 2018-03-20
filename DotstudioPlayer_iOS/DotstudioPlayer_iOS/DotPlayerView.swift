@@ -70,7 +70,7 @@ public class DotPlayerView: UIView {
         self.viewPlayerControls?.frame = self.playerController.view.bounds
         self.viewPlayerControls?.showTopBarControls = self.showTopBarControls
         self.viewPlayerControls?.showBottomBarControls = self.showBottomBarControls
-
+        self.contentView.sendSubview(toBack: playerController.view)
     }
     public func getTestString() -> String {
         return "DotPlayer String"
@@ -120,7 +120,7 @@ public class DotPlayerView: UIView {
             
             self.playerController.showsPlaybackControls = false
             self.contentView.addSubview(playerController.view)
-//            self.contentView.sendSubview(toBack: playerController.view)
+            self.contentView.sendSubview(toBack: playerController.view)
             self.playerController.view.frame = self.contentView.frame
             
             self.addControlsContentView()
@@ -197,7 +197,7 @@ public class DotPlayerView: UIView {
         self.viewPlayerControls?.pause() //buttonPlay?.isSelected = false
     }
     
-    func toggleFullscreen() {
+    public func toggleFullscreen() {
         self.isFullScreen = !self.isFullScreen
         if self.isFullScreen {
             if let window = self.window {
