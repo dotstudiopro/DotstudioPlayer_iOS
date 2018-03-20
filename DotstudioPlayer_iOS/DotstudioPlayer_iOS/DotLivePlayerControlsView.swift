@@ -15,7 +15,30 @@ protocol DotLivePlayerControlsViewDelegate: DotPlayerControlsViewDelegate {
 class DotLivePlayerControlsView: DotPlayerControlsView {
     var delegate: DotLivePlayerControlsViewDelegate?
 
+    override var showBottomBarControls: Bool {
+        didSet {
+            if showBottomBarControls {
+                self.viewBottomBar?.isHidden = false
+            } else {
+                self.viewBottomBar?.isHidden = true
+            }
+        }
+    }
+    public override func play() {
+        self.buttonPlay?.isSelected = true
+        self.buttonBigPlay?.isSelected = true
+    }
+    
+    public override func pause() {
+        self.buttonPlay?.isSelected = false
+        self.buttonBigPlay?.isSelected = false
+    }
+    @IBAction func didTriggerActionForBigPlayButton(_ sender: Any) {
+        print("Big play Button Action Triggered.")
+        self.delegate?.didTriggerActionForPlayButton(self)
+    }
     @IBAction override func didTriggerActionForPlayButton(_ sender: Any) {
+        print("Play Button Action Triggered.")
         self.delegate?.didTriggerActionForPlayButton(self)
     }
     @IBAction override func didTriggerActionForExpandButton(_ sender: Any) {

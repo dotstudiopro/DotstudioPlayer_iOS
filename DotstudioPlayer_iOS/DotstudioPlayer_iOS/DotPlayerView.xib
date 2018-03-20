@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -135,10 +136,21 @@
             <rect key="frame" x="0.0" y="0.0" width="640" height="360"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
+                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Zw-FY-a29">
+                    <rect key="frame" x="260" y="120" width="120" height="120"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="7Zw-FY-a29" secondAttribute="height" multiplier="1:1" id="bxo-Qd-pk3"/>
+                    </constraints>
+                    <state key="normal" title="Button" image="play-icon"/>
+                    <state key="selected" image="pause-icon"/>
+                    <connections>
+                        <action selector="didTriggerActionForBigPlayButton:" destination="UeI-JQ-ap0" eventType="primaryActionTriggered" id="TcC-8x-gTc"/>
+                    </connections>
+                </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KpE-Q1-3XC" customClass="EZYGradientView" customModule="DotstudioPlayer_iOS" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="320" width="640" height="40"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cld-PR-OFq" userLabel="Play Icon">
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cld-PR-OFq" userLabel="Play Icon">
                             <rect key="frame" x="5" y="7.5" width="25" height="25"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="25" id="YN3-sw-dEP">
@@ -203,19 +215,30 @@
                         <userDefinedRuntimeAttribute type="number" keyPath="fadeIntensity">
                             <real key="value" value="1"/>
                         </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="firstColor">
+                            <color key="value" red="1" green="1" blue="1" alpha="0.30771083047945208" colorSpace="calibratedRGB"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="secondColor">
+                            <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.7029109589041096" colorSpace="calibratedRGB"/>
+                        </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="7Zw-FY-a29" firstAttribute="centerX" secondItem="gU2-wv-w6s" secondAttribute="centerX" id="GM1-Jw-lMk"/>
+                <constraint firstAttribute="height" secondItem="7Zw-FY-a29" secondAttribute="height" multiplier="3" id="POI-Lu-V8r"/>
                 <constraint firstAttribute="bottom" secondItem="KpE-Q1-3XC" secondAttribute="bottom" id="PVD-cG-np3"/>
                 <constraint firstItem="KpE-Q1-3XC" firstAttribute="leading" secondItem="UeI-JQ-ap0" secondAttribute="leading" id="bcu-Ki-L7P"/>
+                <constraint firstItem="7Zw-FY-a29" firstAttribute="centerY" secondItem="gU2-wv-w6s" secondAttribute="centerY" id="hfI-Bo-fl9"/>
                 <constraint firstAttribute="trailing" secondItem="KpE-Q1-3XC" secondAttribute="trailing" id="wLG-zH-ycR"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="gU2-wv-w6s"/>
             <connections>
+                <outlet property="buttonBigPlay" destination="7Zw-FY-a29" id="vyb-00-n4U"/>
                 <outlet property="buttonPlay" destination="cld-PR-OFq" id="Nba-fF-vKo"/>
+                <outlet property="viewBottomBar" destination="KpE-Q1-3XC" id="0lm-B7-1Jj"/>
             </connections>
             <point key="canvasLocation" x="144" y="711"/>
         </view>

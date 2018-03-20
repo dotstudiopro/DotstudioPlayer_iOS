@@ -13,6 +13,17 @@ protocol DotRegularPlayerControlsViewDelegate: DotPlayerControlsViewDelegate {
 }
 
 class DotRegularPlayerControlsView: DotPlayerControlsView {
+    
+    public override func play() {
+        self.buttonPlay?.isSelected = true
+        self.buttonBigPlay?.isSelected = true
+    }
+    
+    public override func pause() {
+        self.buttonPlay?.isSelected = false
+        self.buttonBigPlay?.isSelected = false
+    }
+
 }
 
 

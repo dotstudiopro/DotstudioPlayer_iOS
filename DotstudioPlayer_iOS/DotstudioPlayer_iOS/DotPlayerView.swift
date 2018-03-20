@@ -34,9 +34,26 @@ public class DotPlayerView: UIView {
     @IBOutlet weak var label: UILabel!
     var isFullScreen: Bool = false
     
-    var viewLivePlayerControls: DotLivePlayerControlsView?
+    var viewPlayerControls: DotPlayerControlsView?
+    var videoTapRecognizer: UITapGestureRecognizer?
+//    var viewLivePlayerControls: DotLivePlayerControlsView?
     var isPlaying: Bool = false
     
+    @IBInspectable open var showTopBarControls: Bool = false {
+        didSet {
+            
+        }
+    }
+    @IBInspectable open var showBottomBarControls: Bool = false {
+        didSet {
+            
+        }
+    }
+
+//    public override func awakeFromNib() {
+//        super.awakeFromNib()
+//        
+//    }
     override public init(frame: CGRect) {
         super.init(frame: frame)
         //setUpView()
@@ -50,7 +67,10 @@ public class DotPlayerView: UIView {
 
     public override func layoutSubviews() {
         super.layoutSubviews()
-        self.viewLivePlayerControls?.frame = self.playerController.view.bounds
+        self.viewPlayerControls?.frame = self.playerController.view.bounds
+        self.viewPlayerControls?.showTopBarControls = self.showTopBarControls
+        self.viewPlayerControls?.showBottomBarControls = self.showBottomBarControls
+
     }
     public func getTestString() -> String {
         return "DotPlayer String"
@@ -110,6 +130,7 @@ public class DotPlayerView: UIView {
     func addControlsContentView() {
 //        self.addRegularPlayerControlsContentView()
         self.addLivePlayerControlsContentView()
+        
     }
     func addRegularPlayerControlsContentView() {
         
@@ -120,20 +141,36 @@ public class DotPlayerView: UIView {
         if let views = nib.instantiate(withOwner: self, options: nil) as? [UIView] {
             if views.count > 2 {
                 if let viewLivePlayerControls = views[2] as? DotLivePlayerControlsView {
-                    self.viewLivePlayerControls = viewLivePlayerControls
+                    self.viewPlayerControls = viewLivePlayerControls
+                    self.videoTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(DotPlayerView.showFullscreenControls(_:)))
+                    self.playerController.contentOverlayView?.addGestureRecognizer(self.videoTapRecognizer!)
                     viewLivePlayerControls.delegate = self
                     if let contentOverlayView = self.playerController.contentOverlayView {
-                        
                         contentOverlayView.addSubview(viewLivePlayerControls)
-                        viewLivePlayerControls.frame = self.playerController.view.bounds //self.playerController.view.bounds
-//                        self.addConstraint(viewLivePlayerControls, superView: self.playerController.view)
+                        viewLivePlayerControls.frame = self.playerController.view.bounds //
                     }
                 }
-                //viewLivePlayerControls.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             }
         }
     }
     
+    @objc func showFullscreenControls(_ recognizer: UITapGestureRecognizer?) {
+        self.viewPlayerControls?.isHidden = false
+        self.viewPlayerControls?.alpha = 0.9
+        startHideControlsTimer()
+    }
+    func startHideControlsTimer() {
+        self.perform(#selector(DotPlayerView.hideFullscreenControls), with: self, afterDelay: 3)
+    }
+    
+    @objc func hideFullscreenControls() {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.viewPlayerControls?.alpha = 0.0
+        }) { (bValue) in
+            self.viewPlayerControls?.isHidden = true
+        }
+        
+    }
     
     func addConstraint(_ subView: UIView, superView: UIView) {
         // Width constraint, half of parent view width
@@ -150,14 +187,14 @@ public class DotPlayerView: UIView {
         self.player?.play()
         self.isPlaying = true
 //        self.viewLivePlayerControls?.buttonPlay?.setImage(#imageLiteral(resourceName: "pause-icon"), for: .normal)
-        self.viewLivePlayerControls?.buttonPlay?.isSelected = true
+        self.viewPlayerControls?.play() //buttonPlay?.isSelected = true
     }
     
-    public func stop() {
+    public func pause() {
         self.player?.pause()
         self.isPlaying = false
 //        self.viewLivePlayerControls?.buttonPlay?.setImage(#imageLiteral(resourceName: "play-icon"), for: .normal)
-        self.viewLivePlayerControls?.buttonPlay?.isSelected = false
+        self.viewPlayerControls?.pause() //buttonPlay?.isSelected = false
     }
     
     func toggleFullscreen() {
@@ -184,7 +221,7 @@ extension DotPlayerView: DotLivePlayerControlsViewDelegate {
     func didTriggerActionForPlayButton(_ sender: Any) {
         print("play button triggered")
         if self.isPlaying {
-            self.stop()
+            self.pause()
         } else {
             self.play()
         }

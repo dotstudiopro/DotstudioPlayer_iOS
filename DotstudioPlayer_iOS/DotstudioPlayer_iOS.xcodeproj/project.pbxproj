@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6C36995B2046E8D300894AF9 /* DotstudioPlayer_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C3699592046E8D300894AF9 /* DotstudioPlayer_iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6C4A1B66205FE9B200F7DEFF /* EZYGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4A1B65205FE9B200F7DEFF /* EZYGradientView.swift */; };
 		6CA5E5A020480CA500414CB4 /* DotPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CA5E59F20480CA500414CB4 /* DotPlayerView.xib */; };
 		6CA5E5A420480CEF00414CB4 /* DotPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA5E5A320480CEF00414CB4 /* DotPlayerView.swift */; };
 		6CA5E5AC204825E500414CB4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA5E5AB204825E500414CB4 /* AppDelegate.swift */; };
@@ -52,6 +53,7 @@
 		6C3699562046E8D300894AF9 /* DotstudioPlayer_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DotstudioPlayer_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C3699592046E8D300894AF9 /* DotstudioPlayer_iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DotstudioPlayer_iOS.h; sourceTree = "<group>"; };
 		6C36995A2046E8D300894AF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6C4A1B65205FE9B200F7DEFF /* EZYGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EZYGradientView.swift; sourceTree = "<group>"; };
 		6CA5E59F20480CA500414CB4 /* DotPlayerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DotPlayerView.xib; sourceTree = "<group>"; };
 		6CA5E5A320480CEF00414CB4 /* DotPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotPlayerView.swift; sourceTree = "<group>"; };
 		6CA5E5A9204825E500414CB4 /* DotstudioPlayer_iOS_Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DotstudioPlayer_iOS_Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,6 +110,7 @@
 		6C3699582046E8D300894AF9 /* DotstudioPlayer_iOS */ = {
 			isa = PBXGroup;
 			children = (
+				6C4A1B63205FE9B100F7DEFF /* ThirdParty */,
 				6C3699592046E8D300894AF9 /* DotstudioPlayer_iOS.h */,
 				6C36995A2046E8D300894AF9 /* Info.plist */,
 				6CA5E59F20480CA500414CB4 /* DotPlayerView.xib */,
@@ -118,6 +121,22 @@
 				6CD6844E20579D1100E00338 /* DotstudioPlayer_iOS.xcassets */,
 			);
 			path = DotstudioPlayer_iOS;
+			sourceTree = "<group>";
+		};
+		6C4A1B63205FE9B100F7DEFF /* ThirdParty */ = {
+			isa = PBXGroup;
+			children = (
+				6C4A1B64205FE9B200F7DEFF /* EZYGradientView */,
+			);
+			path = ThirdParty;
+			sourceTree = "<group>";
+		};
+		6C4A1B64205FE9B200F7DEFF /* EZYGradientView */ = {
+			isa = PBXGroup;
+			children = (
+				6C4A1B65205FE9B200F7DEFF /* EZYGradientView.swift */,
+			);
+			path = EZYGradientView;
 			sourceTree = "<group>";
 		};
 		6CA5E5AA204825E500414CB4 /* DotstudioPlayer_iOS_Demo */ = {
@@ -254,6 +273,7 @@
 			files = (
 				6CA5E5A420480CEF00414CB4 /* DotPlayerView.swift in Sources */,
 				6CA5E5C52048508200414CB4 /* DotPlayerControlsView.swift in Sources */,
+				6C4A1B66205FE9B200F7DEFF /* EZYGradientView.swift in Sources */,
 				6CD6845120579F8A00E00338 /* DotRegularPlayerControlsView.swift in Sources */,
 				6CD6844D20579AD000E00338 /* DotLivePlayerControlsView.swift in Sources */,
 			);

@@ -17,6 +17,7 @@ class DotPlayerControlsView: UIView {
 //    var delegate: DotPlayerControlsViewDelegate?
 
     @IBOutlet weak var buttonPlay: UIButton?
+    @IBOutlet weak var buttonBigPlay: UIButton?
     @IBOutlet weak var buttonExpand: UIButton?
     /*
     // Only override draw() if you perform custom drawing.
@@ -25,6 +26,19 @@ class DotPlayerControlsView: UIView {
         // Drawing code
     }
     */
+    
+    var showTopBarControls: Bool = false
+    var showBottomBarControls: Bool = false
+    
+    @IBOutlet weak var viewTopBar: EZYGradientView?
+    @IBOutlet weak var viewBottomBar: EZYGradientView?
+    
+    
+    public func play() {
+    }
+    public func pause() {
+    }
+    
     @IBAction func didTriggerActionForExpandButton(_ sender: Any) {
         print("Expand Button Action Triggered.")
         //self.delegate?.didTriggerActionForExpandButton(self)
