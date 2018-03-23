@@ -125,6 +125,8 @@ public class DotPlayerView: UIView {
             
             self.addControlsContentView()
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
     }
     
     func addControlsContentView() {
@@ -200,21 +202,57 @@ public class DotPlayerView: UIView {
     public func toggleFullscreen() {
         self.isFullScreen = !self.isFullScreen
         if self.isFullScreen {
-            if let window = self.window {
-                self.playerController.view.removeFromSuperview()
-                window.addSubview(self.playerController.view)
-                self.playerController.view.frame = window.bounds
-                let value = UIInterfaceOrientation.landscapeLeft.rawValue
-                UIDevice.current.setValue(value, forKey: "orientation")
+            var value = UIInterfaceOrientation.landscapeLeft.rawValue
+            if UIDevice.current.orientation == .landscapeRight {
+                value = UIInterfaceOrientation.landscapeRight.rawValue
             }
+            UIDevice.current.setValue(value, forKey: "orientation")
+//            if let window = self.window {
+//                self.playerController.view.removeFromSuperview()
+//                window.addSubview(self.playerController.view)
+//                self.playerController.view.frame = window.bounds
+//                let value = UIInterfaceOrientation.landscapeLeft.rawValue
+//                UIDevice.current.setValue(value, forKey: "orientation")
+//            }
         } else {
-            self.playerController.view.removeFromSuperview()
-            self.contentView.addSubview(playerController.view)
-            playerController.view.frame = self.contentView.frame
+//            self.playerController.view.removeFromSuperview()
+//            self.contentView.addSubview(playerController.view)
+//            playerController.view.frame = self.contentView.frame
             let value = UIInterfaceOrientation.portrait.rawValue
             UIDevice.current.setValue(value, forKey: "orientation")
         }
     }
+    
+    @objc func rotated() {
+        if UIDeviceOrientationIsLandscape(UIDevice.current.orientation) {
+            print("Landscape")
+            if let window = self.window {
+                self.playerController.view.removeFromSuperview()
+                window.addSubview(self.playerController.view)
+                self.playerController.view.frame = window.bounds
+            }
+        } else if UIDeviceOrientationIsPortrait(UIDevice.current.orientation) {
+            print("Portrait")
+            self.playerController.view.removeFromSuperview()
+            self.contentView.addSubview(playerController.view)
+            playerController.view.frame = self.contentView.frame
+        }
+        self.layoutSubviews()
+    }
+//    func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+//        if UIDevice.current.orientation.isLandscape {
+//            print("Landscape")
+//            self.viewLivePlayerTicker.isHidden = false
+//            //            self.dotPlayerView.bringSubview(toFront: self.viewLivePlayerTicker)
+//            UIApplication.shared.isStatusBarHidden = true
+//        } else {
+//            print("Portrait")
+//            self.viewLivePlayerTicker.isHidden = true
+//            //            self.dotPlayerView.bringSubview(toFront: self.viewLivePlayerTicker)
+//            UIApplication.shared.isStatusBarHidden = false
+//        }
+//    }
+    
 }
 
 extension DotPlayerView: DotLivePlayerControlsViewDelegate {
