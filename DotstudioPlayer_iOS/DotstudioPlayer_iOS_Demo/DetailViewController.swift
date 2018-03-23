@@ -31,8 +31,15 @@ class DetailViewController: UIViewController {
         var strUrl = "https://k7q5a5e5.ssl.hwcdn.net/files/company/53fd1266d66da833047b23c6/assets/videos/540f28fdd66da89e1ed70281/vod/540f28fdd66da89e1ed70281.m3u8"
 //        strUrl = "https://vcndecentric.teleosmedia.com/stream/decentric/dclive1/playlist.m3u8"
         self.dotPlayerView.set(strVideoUrl: strUrl)
+        
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 40))
+        label.text = "Test text"
+        label.textColor = UIColor.red
+        self.dotPlayerView.viewContentOverlayPlayerController?.addSubview(label)
+        self.dotPlayerView.viewContentOverlayPlayerController?.bringSubview(toFront: label)
+        self.labelTest = label
     }
-
+    var labelTest: UILabel?
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -44,6 +51,15 @@ class DetailViewController: UIViewController {
         self.dotPlayerView.play()
     }
 
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        if let labelTest = self.labelTest {
+            self.dotPlayerView.viewContentOverlayPlayerController?.bringSubview(toFront: labelTest)
+        }
+    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

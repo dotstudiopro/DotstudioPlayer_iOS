@@ -39,6 +39,8 @@ public class DotPlayerView: UIView {
 //    var viewLivePlayerControls: DotLivePlayerControlsView?
     var isPlaying: Bool = false
     
+    public var viewContentOverlayPlayerController: UIView?
+    
     @IBInspectable open var showTopBarControls: Bool = false {
         didSet {
             
@@ -124,6 +126,8 @@ public class DotPlayerView: UIView {
             self.playerController.view.frame = self.contentView.frame
             
             self.addControlsContentView()
+            
+            self.viewContentOverlayPlayerController = self.playerController.contentOverlayView
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
@@ -231,11 +235,13 @@ public class DotPlayerView: UIView {
                 window.addSubview(self.playerController.view)
                 self.playerController.view.frame = window.bounds
             }
+//            UIApplication.shared.isStatusBarHidden = true
         } else if UIDeviceOrientationIsPortrait(UIDevice.current.orientation) {
             print("Portrait")
             self.playerController.view.removeFromSuperview()
             self.contentView.addSubview(playerController.view)
             playerController.view.frame = self.contentView.frame
+//            UIApplication.shared.isStatusBarHidden = false
         }
         self.layoutSubviews()
     }
