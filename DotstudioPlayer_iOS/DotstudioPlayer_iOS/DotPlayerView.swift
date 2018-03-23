@@ -34,7 +34,7 @@ public class DotPlayerView: UIView {
     @IBOutlet weak var label: UILabel!
     var isFullScreen: Bool = false
     
-    var viewPlayerControls: DotPlayerControlsView?
+    public var viewPlayerControls: DotPlayerControlsView?
     var videoTapRecognizer: UITapGestureRecognizer?
 //    var viewLivePlayerControls: DotLivePlayerControlsView?
     var isPlaying: Bool = false

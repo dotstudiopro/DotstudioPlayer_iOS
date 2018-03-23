@@ -13,7 +13,7 @@ protocol DotPlayerControlsViewDelegate {
     func didTriggerActionForPlayButton(_ sender: Any)
 }
 
-class DotPlayerControlsView: UIView {
+public class DotPlayerControlsView: UIView {
 //    var delegate: DotPlayerControlsViewDelegate?
 
     @IBOutlet weak var buttonPlay: UIButton?
