@@ -29,8 +29,8 @@ class DetailViewController: UIViewController {
 //        self.viewPlayer.bringSubview(toFront: dotPlayerView)
 //        dotPlayerView.play()
         var strUrl = "https://k7q5a5e5.ssl.hwcdn.net/files/company/53fd1266d66da833047b23c6/assets/videos/540f28fdd66da89e1ed70281/vod/540f28fdd66da89e1ed70281.m3u8"
-//        strUrl = "https://vcndecentric.teleosmedia.com/stream/decentric/dclive1/playlist.m3u8"
-        self.dotPlayerView.set(strVideoUrl: strUrl)
+        strUrl = "https://vcndecentric.teleosmedia.com/stream/decentric/dclive1/playlist.m3u8"
+        self.dotPlayerView.set(strVideoUrl: strUrl, isLiveStreaming: true)
         
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 40))
         label.text = "Test text"

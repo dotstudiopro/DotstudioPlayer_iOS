@@ -38,6 +38,7 @@ public class DotPlayerView: UIView {
     var videoTapRecognizer: UITapGestureRecognizer?
 //    var viewLivePlayerControls: DotLivePlayerControlsView?
     var isPlaying: Bool = false
+    var isLiveStreaming: Bool = false
     
     public var viewContentOverlayPlayerController: UIView?
     
@@ -108,7 +109,8 @@ public class DotPlayerView: UIView {
         self.contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
     
-    public func set(strVideoUrl: String) {
+    public func set(strVideoUrl: String, isLiveStreaming: Bool) {
+        self.isLiveStreaming = isLiveStreaming
         let strVideoUrl_ = strVideoUrl //"https://k7q5a5e5.ssl.hwcdn.net/files/company/53fd1266d66da833047b23c6/assets/videos/540f28fdd66da89e1ed70281/vod/540f28fdd66da89e1ed70281.m3u8" //http://static.videokart.ir/clip/100/480.mp4"
         if let url : URL = URL(string: strVideoUrl_) {
             let player = AVPlayer(url: url)
@@ -126,6 +128,11 @@ public class DotPlayerView: UIView {
             self.playerController.view.frame = self.contentView.frame
             
             self.addControlsContentView()
+            if #available(iOS 10.0, *) {
+                player.automaticallyWaitsToMinimizeStalling = false
+            } else {
+                // Fallback on earlier versions
+            }
             
             self.viewContentOverlayPlayerController = self.playerController.contentOverlayView
         }
@@ -190,8 +197,16 @@ public class DotPlayerView: UIView {
     }
 
     public func play() {
+        if self.isLiveStreaming {
+            guard let livePosition = self.player?.currentItem?.seekableTimeRanges.last as? CMTimeRange else {
+                return
+            }
+            self.player?.seek(to:CMTimeRangeGetEnd(livePosition))
+        }
+        
         self.player?.play()
         self.isPlaying = true
+//        self.playerController.player = self.player
 //        self.viewLivePlayerControls?.buttonPlay?.setImage(#imageLiteral(resourceName: "pause-icon"), for: .normal)
         self.viewPlayerControls?.play() //buttonPlay?.isSelected = true
     }
@@ -199,6 +214,7 @@ public class DotPlayerView: UIView {
     public func pause() {
         self.player?.pause()
         self.isPlaying = false
+//        self.playerController.player = nil
 //        self.viewLivePlayerControls?.buttonPlay?.setImage(#imageLiteral(resourceName: "play-icon"), for: .normal)
         self.viewPlayerControls?.pause() //buttonPlay?.isSelected = false
     }
