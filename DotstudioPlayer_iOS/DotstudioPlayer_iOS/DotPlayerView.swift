@@ -8,7 +8,7 @@
 
 import UIKit
 import AVKit
-
+import AVFoundation
 
 enum DotPlayerNibViewType: Int {
     case mainView = 0
@@ -16,6 +16,16 @@ enum DotPlayerNibViewType: Int {
     case liveControlsView = 2
 //    case regularControlsView = 3
 }
+
+public protocol DotPlayerViewDelegate {
+    func didPlayerBecomeReady(_ dotPlayerObject: DotPlayerObject)
+    func didFailedToLoadPlayer(_ dotPlayerObject: DotPlayerObject)
+    func didPlayDotPlayerVideo(_ dotPlayerObject: DotPlayerObject)
+    func didPauseDotPlayerVideo(_ dotPlayerObject: DotPlayerObject)
+    func didResumeDotPlayerVideo(_ dotPlayerObject: DotPlayerObject)
+    func didEndPlaybackDotPlayerVideo(_ dotPlayerObject: DotPlayerObject)
+}
+private var playerViewControllerKVOContext = 0
 
 public class DotPlayerView: UIView {
 
@@ -27,10 +37,46 @@ public class DotPlayerView: UIView {
     }
     */
     
+    public var delegate: DotPlayerViewDelegate?
     let nibName = "DotPlayerView"
     var contentView: UIView!
     let playerController = AVPlayerViewController()
-    var player : AVPlayer?
+    @objc let player: AVPlayer = AVPlayer()
+    private var playerItem: AVPlayerItem? = nil {
+        didSet {
+            /*
+             If needed, configure player item here before associating it with a player.
+             (example: adding outputs, setting text style rules, selecting media options)
+             */
+            player.replaceCurrentItem(with: self.playerItem)
+        }
+    }
+    var currentTime: Double {
+        get {
+            return CMTimeGetSeconds(player.currentTime())
+        }
+        set {
+            let newTime = CMTimeMakeWithSeconds(newValue, 1)
+            player.seek(to: newTime, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero)
+        }
+    }
+    
+    var duration: Double {
+        guard let currentItem = player.currentItem else { return 0.0 }
+        
+        return CMTimeGetSeconds(currentItem.duration)
+    }
+    
+    var rate: Float {
+        get {
+            return player.rate
+        }
+        
+        set {
+            player.rate = newValue
+        }
+    }
+    
     @IBOutlet weak var label: UILabel!
     var isFullScreen: Bool = false
     
@@ -38,8 +84,8 @@ public class DotPlayerView: UIView {
     var videoTapRecognizer: UITapGestureRecognizer?
 //    var viewLivePlayerControls: DotLivePlayerControlsView?
     var isPlaying: Bool = false
-    var isLiveStreaming: Bool = false
-    
+//    var isLiveStreaming: Bool = false
+    var dotPlayerObject: DotPlayerObject?
     public var viewContentOverlayPlayerController: UIView?
     
     @IBInspectable open var showTopBarControls: Bool = false {
@@ -53,10 +99,10 @@ public class DotPlayerView: UIView {
         }
     }
 
-//    public override func awakeFromNib() {
-//        super.awakeFromNib()
-//        
-//    }
+    public override func awakeFromNib() {
+        super.awakeFromNib()
+        NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+    }
     override public init(frame: CGRect) {
         super.init(frame: frame)
         //setUpView()
@@ -68,6 +114,16 @@ public class DotPlayerView: UIView {
         commonInit()
     }
 
+    func registerObservers() {
+        self.addObserver(self, forKeyPath: #keyPath(DotPlayerView.player.currentItem.duration), options: [.new, .initial], context: &playerViewControllerKVOContext)
+        self.addObserver(self, forKeyPath: #keyPath(DotPlayerView.player.rate), options: [.new, .initial], context: &playerViewControllerKVOContext)
+        self.addObserver(self, forKeyPath: #keyPath(DotPlayerView.player.currentItem.status), options: [.new, .initial], context: &playerViewControllerKVOContext)
+    }
+    func deregisterObservers() {
+        self.removeObserver(self, forKeyPath: #keyPath(DotPlayerView.player.currentItem.duration), context: &playerViewControllerKVOContext)
+        self.removeObserver(self, forKeyPath: #keyPath(DotPlayerView.player.rate), context: &playerViewControllerKVOContext)
+        self.removeObserver(self, forKeyPath: #keyPath(DotPlayerView.player.currentItem.status), context: &playerViewControllerKVOContext)
+    }
     public override func layoutSubviews() {
         super.layoutSubviews()
         self.viewPlayerControls?.frame = self.playerController.view.bounds
@@ -109,41 +165,116 @@ public class DotPlayerView: UIView {
         self.contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
     
-    public func set(strVideoUrl: String, isLiveStreaming: Bool) {
-        self.isLiveStreaming = isLiveStreaming
-        let strVideoUrl_ = strVideoUrl //"https://k7q5a5e5.ssl.hwcdn.net/files/company/53fd1266d66da833047b23c6/assets/videos/540f28fdd66da89e1ed70281/vod/540f28fdd66da89e1ed70281.m3u8" //http://static.videokart.ir/clip/100/480.mp4"
-        if let url : URL = URL(string: strVideoUrl_) {
-            let player = AVPlayer(url: url)
-//            let playerLayer = AVPlayerLayer(player: player)
-//            playerLayer.frame = self.bounds
-//            self.contentView.layer.addSublayer(playerLayer)
-            self.player = player
-            
-            self.playerController.player = player
-//            self.addChildViewController(playerController)
-            
-            self.playerController.showsPlaybackControls = false
-            self.contentView.addSubview(playerController.view)
-            self.contentView.sendSubview(toBack: playerController.view)
-            self.playerController.view.frame = self.contentView.frame
-            
-            self.addControlsContentView()
-            if #available(iOS 10.0, *) {
-                player.automaticallyWaitsToMinimizeStalling = false
-            } else {
-                // Fallback on earlier versions
-            }
-            
-            self.viewContentOverlayPlayerController = self.playerController.contentOverlayView
+    //MARK: - Key Value Observing
+    // Update our UI when player or `player.currentItem` changes.
+    override public func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
+        // Make sure the this KVO callback was intended for this view controller.
+        guard context == &playerViewControllerKVOContext else {
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+            return
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+        if keyPath == #keyPath(player.currentItem.duration) {
+            // Update timeSlider and enable/disable controls when duration > 0.0
+            
+            /*
+             Handle `NSNull` value for `NSKeyValueChangeNewKey`, i.e. when
+             `player.currentItem` is nil.
+             */
+            let newDuration: CMTime
+            if let newDurationAsValue = change?[NSKeyValueChangeKey.newKey] as? NSValue {
+                newDuration = newDurationAsValue.timeValue
+            }
+            else {
+                newDuration = kCMTimeZero
+            }
+            
+            let hasValidDuration = newDuration.isNumeric && newDuration.value != 0
+            let newDurationSeconds = hasValidDuration ? CMTimeGetSeconds(newDuration) : 0.0
+            let currentTime = hasValidDuration ? Float(CMTimeGetSeconds(player.currentTime())) : 0.0
+            
+        }
+        else if keyPath == #keyPath(player.rate) {
+            // Update `playPauseButton` image.
+            let newRate = (change?[NSKeyValueChangeKey.newKey] as! NSNumber).doubleValue
+            if let dotPlayerObject = self.dotPlayerObject {
+//                if newRate == 1.0 {
+//                    self.delegate?.didPauseDotPlayerVideo(dotPlayerObject)
+//                } else {
+//                    self.delegate?.didPlayDotPlayerVideo(dotPlayerObject)
+//                }
+            }
+        }
+        else if keyPath == #keyPath(player.currentItem.status) {
+            // Display an error if status becomes `.Failed`.
+            
+            /*
+             Handle `NSNull` value for `NSKeyValueChangeNewKey`, i.e. when
+             `player.currentItem` is nil.
+             */
+            let newStatus: AVPlayerItemStatus
+            
+            if let newStatusAsNumber = change?[NSKeyValueChangeKey.newKey] as? NSNumber {
+                newStatus = AVPlayerItemStatus(rawValue: newStatusAsNumber.intValue)!
+            }
+            else {
+                newStatus = .unknown
+            }
+            
+            switch newStatus {
+                case .unknown:
+                    break
+                case .failed:
+                    if let dotPlayerObject = self.dotPlayerObject {
+                        self.delegate?.didFailedToLoadPlayer(dotPlayerObject)
+                    }
+                    break
+                case .readyToPlay:
+                    if let dotPlayerObject = self.dotPlayerObject {
+                        self.delegate?.didPlayerBecomeReady(dotPlayerObject)
+                    }
+                    break
+                default: break
+            }
+//            if newStatus == .failed {
+////                handleErrorWithMessage(player.currentItem?.error?.localizedDescription, error:player.currentItem?.error)
+//            }
+        }
+    }
+    
+    //MARK: - Set Player methods.
+    public func setPlayerObject(_ dotPlayerObject: DotPlayerObject) {
+        self.dotPlayerObject = dotPlayerObject
+//        let strVideoUrl_ = strVideoUrl //"https://k7q5a5e5.ssl.hwcdn.net/files/company/53fd1266d66da833047b23c6/assets/videos/540f28fdd66da89e1ed70281/vod/540f28fdd66da89e1ed70281.m3u8" //http://static.videokart.ir/clip/100/480.mp4"
+        if let strVideoUrl = dotPlayerObject.strVideoUrl {
+            if let url : URL = URL(string: strVideoUrl) {
+//                let player = AVPlayer(url: url)
+//                self.player = player
+                self.playerItem = AVPlayerItem(url: url)
+                
+                self.playerController.player = player
+                self.playerController.showsPlaybackControls = false
+                self.contentView.addSubview(playerController.view)
+                self.contentView.sendSubview(toBack: playerController.view)
+                self.playerController.view.frame = self.contentView.frame
+                
+                self.addControlsContentView()
+                
+                self.viewContentOverlayPlayerController = self.playerController.contentOverlayView
+            }
+            
+//            NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+            
+        }
+
     }
     
     func addControlsContentView() {
-//        self.addRegularPlayerControlsContentView()
-        self.addLivePlayerControlsContentView()
-        
+        if let isLiveStreaming = self.dotPlayerObject?.isLiveStreaming, isLiveStreaming == true {
+            self.addLivePlayerControlsContentView()
+        } else {
+            //        self.addRegularPlayerControlsContentView()
+        }
     }
     func addRegularPlayerControlsContentView() {
         
@@ -177,6 +308,7 @@ public class DotPlayerView: UIView {
     }
     
     @objc func hideFullscreenControls() {
+        self.layer.removeAllAnimations()
         UIView.animate(withDuration: 0.5, animations: {
             self.viewPlayerControls?.alpha = 0.0
         }) { (bValue) in
@@ -197,23 +329,31 @@ public class DotPlayerView: UIView {
     }
 
     public func play() {
-        if self.isLiveStreaming {
-            guard let livePosition = self.player?.currentItem?.seekableTimeRanges.last as? CMTimeRange else {
+        if let isLiveStreaming = self.dotPlayerObject?.isLiveStreaming, isLiveStreaming == true {
+            guard let livePosition = self.player.currentItem?.seekableTimeRanges.last as? CMTimeRange else {
                 return
             }
-            self.player?.seek(to:CMTimeRangeGetEnd(livePosition))
+            self.player.seek(to:CMTimeRangeGetEnd(livePosition))
         }
         
-        self.player?.play()
+        self.player.play()
         self.isPlaying = true
+        if let dotPlayerObject = self.dotPlayerObject {
+//            self.delegate?.didPlayDotPlayerVideo(dotPlayerObject)
+            self.delegate?.didResumeDotPlayerVideo(dotPlayerObject)
+        }
 //        self.playerController.player = self.player
 //        self.viewLivePlayerControls?.buttonPlay?.setImage(#imageLiteral(resourceName: "pause-icon"), for: .normal)
         self.viewPlayerControls?.play() //buttonPlay?.isSelected = true
+        self.startHideControlsTimer()
     }
     
     public func pause() {
-        self.player?.pause()
+        self.player.pause()
         self.isPlaying = false
+        if let dotPlayerObject = self.dotPlayerObject {
+            self.delegate?.didPauseDotPlayerVideo(dotPlayerObject)
+        }
 //        self.playerController.player = nil
 //        self.viewLivePlayerControls?.buttonPlay?.setImage(#imageLiteral(resourceName: "play-icon"), for: .normal)
         self.viewPlayerControls?.pause() //buttonPlay?.isSelected = false
@@ -275,6 +415,10 @@ public class DotPlayerView: UIView {
 //        }
 //    }
     
+    func setVideoWaterMark(dotPlayerObject: DotPlayerObject) {
+        
+    }
+
 }
 
 extension DotPlayerView: DotLivePlayerControlsViewDelegate {

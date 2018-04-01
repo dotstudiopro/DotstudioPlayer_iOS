@@ -30,6 +30,12 @@ public class DotPlayerControlsView: UIView {
     var showTopBarControls: Bool = false
     var showBottomBarControls: Bool = false
     
+    @IBOutlet public weak var imageViewWatermark: UIImageView?
+    @IBOutlet public weak var constraintWatermarkXOffset: NSLayoutConstraint?
+    @IBOutlet public weak var constraintWatermarkYOffset: NSLayoutConstraint?
+    @IBOutlet public weak var constraintWatermarkWidth: NSLayoutConstraint?
+    @IBOutlet public weak var constraintWatermarkHeight: NSLayoutConstraint?
+
     @IBOutlet weak var viewTopBar: EZYGradientView?
     @IBOutlet weak var viewBottomBar: EZYGradientView?
     
@@ -47,4 +53,27 @@ public class DotPlayerControlsView: UIView {
         print("play Button Action Triggered.")
     }
 
+    func setVideoWaterMark(dotPlayerObject: DotPlayerObject) {
+        if dotPlayerObject.isWaterMarkingEnabled {
+            self.imageViewWatermark?.isHidden = false
+            if let strWaterMarkUrl = dotPlayerObject.strWaterMarkUrl {
+                if let fWaterMarkOpacity = dotPlayerObject.fWaterMarkOpacity {
+                    self.imageViewWatermark?.alpha = fWaterMarkOpacity
+                }
+                if let url = URL(string: strWaterMarkUrl) {
+                    //self.imageViewWatermark?.setImage.splt_setImageFromURL(url, placeholder: nil)
+                } else {
+                    self.imageViewWatermark?.image = nil
+                }
+            } else {
+                self.imageViewWatermark?.image = nil
+            }
+        } else {
+            self.imageViewWatermark?.isHidden = true
+        }
+        // Set Watermark Offset
+        self.constraintWatermarkXOffset?.constant = dotPlayerObject.fWaterMarkXOffset
+        self.constraintWatermarkYOffset?.constant = dotPlayerObject.fWaterMarkYOffset
+        self.constraintWatermarkWidth?.constant = dotPlayerObject.sizeWaterMark.width
+    }
 }

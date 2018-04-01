@@ -23,6 +23,7 @@
 		6CD6844D20579AD000E00338 /* DotLivePlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD6844C20579AD000E00338 /* DotLivePlayerControlsView.swift */; };
 		6CD6844F20579D1100E00338 /* DotstudioPlayer_iOS.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CD6844E20579D1100E00338 /* DotstudioPlayer_iOS.xcassets */; };
 		6CD6845120579F8A00E00338 /* DotRegularPlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD6845020579F8A00E00338 /* DotRegularPlayerControlsView.swift */; };
+		6CFD36E8206E7ADB003973EA /* DotPlayerObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFD36E7206E7ADB003973EA /* DotPlayerObject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		6CD6844C20579AD000E00338 /* DotLivePlayerControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotLivePlayerControlsView.swift; sourceTree = "<group>"; };
 		6CD6844E20579D1100E00338 /* DotstudioPlayer_iOS.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = DotstudioPlayer_iOS.xcassets; sourceTree = "<group>"; };
 		6CD6845020579F8A00E00338 /* DotRegularPlayerControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotRegularPlayerControlsView.swift; sourceTree = "<group>"; };
+		6CFD36E7206E7ADB003973EA /* DotPlayerObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotPlayerObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 				6C3699592046E8D300894AF9 /* DotstudioPlayer_iOS.h */,
 				6C36995A2046E8D300894AF9 /* Info.plist */,
 				6CA5E59F20480CA500414CB4 /* DotPlayerView.xib */,
+				6CFD36E7206E7ADB003973EA /* DotPlayerObject.swift */,
 				6CA5E5A320480CEF00414CB4 /* DotPlayerView.swift */,
 				6CA5E5C42048508200414CB4 /* DotPlayerControlsView.swift */,
 				6CD6845020579F8A00E00338 /* DotRegularPlayerControlsView.swift */,
@@ -274,6 +277,7 @@
 				6CA5E5A420480CEF00414CB4 /* DotPlayerView.swift in Sources */,
 				6CA5E5C52048508200414CB4 /* DotPlayerControlsView.swift in Sources */,
 				6C4A1B66205FE9B200F7DEFF /* EZYGradientView.swift in Sources */,
+				6CFD36E8206E7ADB003973EA /* DotPlayerObject.swift in Sources */,
 				6CD6845120579F8A00E00338 /* DotRegularPlayerControlsView.swift in Sources */,
 				6CD6844D20579AD000E00338 /* DotLivePlayerControlsView.swift in Sources */,
 			);
