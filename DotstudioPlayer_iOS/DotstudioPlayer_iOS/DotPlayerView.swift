@@ -88,8 +88,8 @@ public class DotPlayerView: UIView {
     var dotPlayerObject: DotPlayerObject?
     public var viewContentOverlayPlayerController: UIView?
     
-    @IBInspectable open var useTopBarControls: Bool = true
-    @IBInspectable open var useBottomBarControls: Bool = true
+    @IBInspectable public var useTopBarControls: Bool = true
+    @IBInspectable public var useBottomBarControls: Bool = true
 
     public override func awakeFromNib() {
         super.awakeFromNib()
