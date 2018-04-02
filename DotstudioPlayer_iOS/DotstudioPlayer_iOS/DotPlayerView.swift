@@ -22,7 +22,7 @@ public protocol DotPlayerViewDelegate {
     func didFailedToLoadPlayer(_ dotPlayerObject: DotPlayerObject)
     func didPlayDotPlayerVideo(_ dotPlayerObject: DotPlayerObject)
     func didPauseDotPlayerVideo(_ dotPlayerObject: DotPlayerObject)
-    func didResumeDotPlayerVideo(_ dotPlayerObject: DotPlayerObject)
+//    func didResumeDotPlayerVideo(_ dotPlayerObject: DotPlayerObject)
     func didEndPlaybackDotPlayerVideo(_ dotPlayerObject: DotPlayerObject)
 }
 private var playerViewControllerKVOContext = 0
@@ -88,16 +88,8 @@ public class DotPlayerView: UIView {
     var dotPlayerObject: DotPlayerObject?
     public var viewContentOverlayPlayerController: UIView?
     
-    @IBInspectable open var showTopBarControls: Bool = false {
-        didSet {
-            
-        }
-    }
-    @IBInspectable open var showBottomBarControls: Bool = false {
-        didSet {
-            
-        }
-    }
+    @IBInspectable open var useTopBarControls: Bool = true
+    @IBInspectable open var useBottomBarControls: Bool = true
 
     public override func awakeFromNib() {
         super.awakeFromNib()
@@ -127,8 +119,8 @@ public class DotPlayerView: UIView {
     public override func layoutSubviews() {
         super.layoutSubviews()
         self.viewPlayerControls?.frame = self.playerController.view.bounds
-        self.viewPlayerControls?.showTopBarControls = self.showTopBarControls
-        self.viewPlayerControls?.showBottomBarControls = self.showBottomBarControls
+        self.viewPlayerControls?.useTopBarControls = self.useTopBarControls
+        self.viewPlayerControls?.useBottomBarControls = self.useBottomBarControls
         self.contentView.sendSubview(toBack: playerController.view)
     }
     public func getTestString() -> String {
@@ -198,11 +190,17 @@ public class DotPlayerView: UIView {
             // Update `playPauseButton` image.
             let newRate = (change?[NSKeyValueChangeKey.newKey] as! NSNumber).doubleValue
             if let dotPlayerObject = self.dotPlayerObject {
-//                if newRate == 1.0 {
-//                    self.delegate?.didPauseDotPlayerVideo(dotPlayerObject)
-//                } else {
-//                    self.delegate?.didPlayDotPlayerVideo(dotPlayerObject)
-//                }
+                if newRate == 1.0 {
+                    if !self.isPlaying {
+                        self.player.rate = 0.0
+                    }
+                    //self.delegate?.didPauseDotPlayerVideo(dotPlayerObject)
+                } else {
+                    if self.isPlaying {
+                        self.player.rate = 1.0
+                    }
+                    //self.delegate?.didPlayDotPlayerVideo(dotPlayerObject)
+                }
             }
         }
         else if keyPath == #keyPath(player.currentItem.status) {
@@ -275,6 +273,8 @@ public class DotPlayerView: UIView {
         } else {
             //        self.addRegularPlayerControlsContentView()
         }
+        self.viewPlayerControls?.useTopBarControls = self.useTopBarControls
+        self.viewPlayerControls?.useBottomBarControls = self.useBottomBarControls
     }
     func addRegularPlayerControlsContentView() {
         
@@ -301,9 +301,9 @@ public class DotPlayerView: UIView {
     @objc func showFullscreenControls(_ recognizer: UITapGestureRecognizer?) {
         self.viewPlayerControls?.isHidden = false
         self.viewPlayerControls?.alpha = 0.9
-        startHideControlsTimer()
+        self.startHideControlsTimer()
     }
-    func startHideControlsTimer() {
+    public func startHideControlsTimer() {
         self.perform(#selector(DotPlayerView.hideFullscreenControls), with: self, afterDelay: 3)
     }
     
@@ -339,13 +339,13 @@ public class DotPlayerView: UIView {
         self.player.play()
         self.isPlaying = true
         if let dotPlayerObject = self.dotPlayerObject {
-//            self.delegate?.didPlayDotPlayerVideo(dotPlayerObject)
-            self.delegate?.didResumeDotPlayerVideo(dotPlayerObject)
+            self.delegate?.didPlayDotPlayerVideo(dotPlayerObject)
+//            self.delegate?.didResumeDotPlayerVideo(dotPlayerObject)
         }
 //        self.playerController.player = self.player
 //        self.viewLivePlayerControls?.buttonPlay?.setImage(#imageLiteral(resourceName: "pause-icon"), for: .normal)
         self.viewPlayerControls?.play() //buttonPlay?.isSelected = true
-        self.startHideControlsTimer()
+//        self.startHideControlsTimer()
     }
     
     public func pause() {

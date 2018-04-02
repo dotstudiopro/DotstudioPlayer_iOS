@@ -27,8 +27,8 @@ public class DotPlayerControlsView: UIView {
     }
     */
     
-    var showTopBarControls: Bool = false
-    var showBottomBarControls: Bool = false
+    var useTopBarControls: Bool = true
+    var useBottomBarControls: Bool = true
     
     @IBOutlet public weak var imageViewWatermark: UIImageView?
     @IBOutlet public weak var constraintWatermarkXOffset: NSLayoutConstraint?
