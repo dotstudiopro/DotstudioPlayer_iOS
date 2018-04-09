@@ -45,6 +45,12 @@ class DotLivePlayerControlsView: DotPlayerControlsView {
         print("Expand Button Action Triggered.")
         self.delegate?.didTriggerActionForExpandButton(self)
     }
+    @IBAction override func didTriggerActionForCastButton(_ sender: Any) {
+        self.delegate?.didTriggerActionForCastButton(self)
+    }
+    @IBAction override func didTriggerActionForShareButton(_ sender: Any) {
+        self.delegate?.didTriggerActionForShareButton(self)
+    }
 
 }
 

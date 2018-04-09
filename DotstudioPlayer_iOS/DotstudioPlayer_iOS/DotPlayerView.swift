@@ -433,6 +433,12 @@ extension DotPlayerView: DotLivePlayerControlsViewDelegate {
     func didTriggerActionForExpandButton(_ sender: Any) {
         self.toggleFullscreen()
     }
+    func didTriggerActionForCastButton(_ sender: Any) {
+        print("cast button triggered")
+    }
+    func didTriggerActionForShareButton(_ sender: Any) {
+        print("share button triggered")
+    }
 }
 
 

@@ -154,6 +154,55 @@
                         <constraint firstAttribute="height" constant="30" id="A54-iq-KaM"/>
                     </constraints>
                 </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dBg-7u-mwg" userLabel="View Top Bar" customClass="EZYGradientView" customModule="DotstudioPlayer_iOS" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MW4-rR-cVG" userLabel="cast icon">
+                            <rect key="frame" x="270" y="0.0" width="40" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="MW4-rR-cVG" secondAttribute="height" multiplier="1:1" id="sPx-jS-YEF"/>
+                            </constraints>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" image="cast-icon"/>
+                            <connections>
+                                <action selector="didTriggerActionForCastButton:" destination="UeI-JQ-ap0" eventType="primaryActionTriggered" id="gvt-7x-VMx"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aOM-cx-csY" userLabel="share icon">
+                            <rect key="frame" x="225" y="0.0" width="40" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="aOM-cx-csY" secondAttribute="height" multiplier="1:1" id="3N6-Yi-UZ5"/>
+                            </constraints>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" image="share-icon"/>
+                            <connections>
+                                <action selector="didTriggerActionForShareButton:" destination="UeI-JQ-ap0" eventType="primaryActionTriggered" id="i1j-o3-a0u"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="MW4-rR-cVG" secondAttribute="trailing" constant="10" id="1Kf-eV-ucp"/>
+                        <constraint firstAttribute="height" constant="40" id="fmE-cO-SHp">
+                            <variation key="heightClass=regular-widthClass=regular" constant="60"/>
+                        </constraint>
+                        <constraint firstItem="aOM-cx-csY" firstAttribute="top" secondItem="dBg-7u-mwg" secondAttribute="top" id="mdf-XE-7qZ"/>
+                        <constraint firstAttribute="bottom" secondItem="MW4-rR-cVG" secondAttribute="bottom" id="nf8-ps-gtE"/>
+                        <constraint firstAttribute="bottom" secondItem="aOM-cx-csY" secondAttribute="bottom" id="tIM-FB-Mr0"/>
+                        <constraint firstItem="MW4-rR-cVG" firstAttribute="top" secondItem="dBg-7u-mwg" secondAttribute="top" id="uUi-ZC-IY4"/>
+                        <constraint firstItem="MW4-rR-cVG" firstAttribute="leading" secondItem="aOM-cx-csY" secondAttribute="trailing" constant="5" id="zzp-Uu-eB7">
+                            <variation key="heightClass=regular-widthClass=regular" constant="10"/>
+                        </constraint>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="color" keyPath="firstColor">
+                            <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="secondColor">
+                            <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KpE-Q1-3XC" customClass="EZYGradientView" customModule="DotstudioPlayer_iOS" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="140" width="320" height="40"/>
                     <subviews>
@@ -236,31 +285,39 @@
                 <constraint firstItem="7Zw-FY-a29" firstAttribute="centerX" secondItem="gU2-wv-w6s" secondAttribute="centerX" id="GM1-Jw-lMk"/>
                 <constraint firstAttribute="height" secondItem="7Zw-FY-a29" secondAttribute="height" multiplier="3" id="POI-Lu-V8r"/>
                 <constraint firstAttribute="bottom" secondItem="KpE-Q1-3XC" secondAttribute="bottom" id="PVD-cG-np3"/>
+                <constraint firstItem="dBg-7u-mwg" firstAttribute="top" secondItem="gU2-wv-w6s" secondAttribute="top" id="Pea-Gl-MRa"/>
                 <constraint firstItem="gU2-wv-w6s" firstAttribute="trailing" secondItem="5aY-dh-Ttd" secondAttribute="trailing" constant="10" id="ZuP-Ts-zCa"/>
                 <constraint firstItem="KpE-Q1-3XC" firstAttribute="leading" secondItem="UeI-JQ-ap0" secondAttribute="leading" id="bcu-Ki-L7P"/>
+                <constraint firstItem="gU2-wv-w6s" firstAttribute="trailing" secondItem="dBg-7u-mwg" secondAttribute="trailing" id="dh1-h5-ygb"/>
                 <constraint firstItem="7Zw-FY-a29" firstAttribute="centerY" secondItem="gU2-wv-w6s" secondAttribute="centerY" id="hfI-Bo-fl9"/>
                 <constraint firstItem="gU2-wv-w6s" firstAttribute="bottom" secondItem="5aY-dh-Ttd" secondAttribute="bottom" constant="10" id="o9l-63-2ue"/>
+                <constraint firstItem="dBg-7u-mwg" firstAttribute="leading" secondItem="gU2-wv-w6s" secondAttribute="leading" id="tM9-C4-W2r"/>
                 <constraint firstAttribute="trailing" secondItem="KpE-Q1-3XC" secondAttribute="trailing" id="wLG-zH-ycR"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="gU2-wv-w6s"/>
             <connections>
                 <outlet property="buttonBigPlay" destination="7Zw-FY-a29" id="vyb-00-n4U"/>
+                <outlet property="buttonCast" destination="MW4-rR-cVG" id="L4w-ts-3SA"/>
                 <outlet property="buttonPlay" destination="cld-PR-OFq" id="Nba-fF-vKo"/>
+                <outlet property="buttonShare" destination="aOM-cx-csY" id="QEp-FE-VLI"/>
                 <outlet property="constraintWatermarkHeight" destination="A54-iq-KaM" id="D0c-8e-XmO"/>
                 <outlet property="constraintWatermarkWidth" destination="7sq-Nc-kfm" id="TFf-Hy-XdC"/>
                 <outlet property="constraintWatermarkXOffset" destination="ZuP-Ts-zCa" id="Lsm-aF-nwB"/>
                 <outlet property="constraintWatermarkYOffset" destination="o9l-63-2ue" id="tde-Nv-roT"/>
                 <outlet property="imageViewWatermark" destination="5aY-dh-Ttd" id="ZWB-LE-3fU"/>
                 <outlet property="viewBottomBar" destination="KpE-Q1-3XC" id="0lm-B7-1Jj"/>
+                <outlet property="viewTopBar" destination="dBg-7u-mwg" id="kh1-It-S5V"/>
             </connections>
             <point key="canvasLocation" x="144" y="711"/>
         </view>
     </objects>
     <resources>
+        <image name="cast-icon" width="28" height="22"/>
         <image name="expand-icon" width="40" height="40"/>
         <image name="pause-icon" width="100" height="100"/>
         <image name="play" width="16" height="16"/>
         <image name="play-icon" width="100" height="100"/>
+        <image name="share-icon" width="25" height="22"/>
     </resources>
 </document>

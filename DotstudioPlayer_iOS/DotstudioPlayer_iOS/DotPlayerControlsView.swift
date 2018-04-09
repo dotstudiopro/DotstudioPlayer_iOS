@@ -11,6 +11,8 @@ import UIKit
 protocol DotPlayerControlsViewDelegate {
     func didTriggerActionForExpandButton(_ sender: Any)
     func didTriggerActionForPlayButton(_ sender: Any)
+    func didTriggerActionForCastButton(_ sender: Any)
+    func didTriggerActionForShareButton(_ sender: Any)
 }
 
 public class DotPlayerControlsView: UIView {
@@ -19,6 +21,8 @@ public class DotPlayerControlsView: UIView {
     @IBOutlet weak var buttonPlay: UIButton?
     @IBOutlet weak var buttonBigPlay: UIButton?
     @IBOutlet weak var buttonExpand: UIButton?
+    @IBOutlet weak var buttonCast: UIButton?
+    @IBOutlet weak var buttonShare: UIButton?
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -52,7 +56,12 @@ public class DotPlayerControlsView: UIView {
     @IBAction func didTriggerActionForPlayButton(_ sender: Any) {
         print("play Button Action Triggered.")
     }
-
+    @IBAction func didTriggerActionForCastButton(_ sender: Any) {
+        print("cast Button Action Triggered.")
+    }
+    @IBAction func didTriggerActionForShareButton(_ sender: Any) {
+        print("share Button Action Triggered.")
+    }
     func setVideoWaterMark(dotPlayerObject: DotPlayerObject) {
         if dotPlayerObject.isWaterMarkingEnabled {
             self.imageViewWatermark?.isHidden = false
