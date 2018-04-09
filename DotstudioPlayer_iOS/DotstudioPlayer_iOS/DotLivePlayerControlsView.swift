@@ -15,6 +15,15 @@ protocol DotLivePlayerControlsViewDelegate: DotPlayerControlsViewDelegate {
 class DotLivePlayerControlsView: DotPlayerControlsView {
     var delegate: DotLivePlayerControlsViewDelegate?
 
+    override var useTopBarControls: Bool {
+        didSet {
+            if useTopBarControls {
+                self.viewTopBar?.isHidden = false
+            } else {
+                self.viewTopBar?.isHidden = true
+            }
+        }
+    }
     override var useBottomBarControls: Bool {
         didSet {
             if useBottomBarControls {
