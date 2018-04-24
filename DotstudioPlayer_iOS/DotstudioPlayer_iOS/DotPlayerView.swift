@@ -24,6 +24,8 @@ public protocol DotPlayerViewDelegate {
     func didPauseDotPlayerVideo(_ dotPlayerObject: DotPlayerObject)
 //    func didResumeDotPlayerVideo(_ dotPlayerObject: DotPlayerObject)
     func didEndPlaybackDotPlayerVideo(_ dotPlayerObject: DotPlayerObject)
+    func didTriggerActionForCastButton(_ dotPlayerObject: DotPlayerObject)
+    func didTriggerActionForShareButton(_ dotPlayerObject: DotPlayerObject)
 }
 private var playerViewControllerKVOContext = 0
 
@@ -435,9 +437,15 @@ extension DotPlayerView: DotLivePlayerControlsViewDelegate {
     }
     func didTriggerActionForCastButton(_ sender: Any) {
         print("cast button triggered")
+        if let dotPlayerObject = self.dotPlayerObject {
+            self.delegate?.didTriggerActionForCastButton(dotPlayerObject)
+        }
     }
     func didTriggerActionForShareButton(_ sender: Any) {
         print("share button triggered")
+        if let dotPlayerObject = self.dotPlayerObject {
+            self.delegate?.didTriggerActionForShareButton(dotPlayerObject)
+        }
     }
 }
 

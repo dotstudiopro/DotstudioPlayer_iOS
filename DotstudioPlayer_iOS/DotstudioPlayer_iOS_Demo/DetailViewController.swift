@@ -25,6 +25,7 @@ class DetailViewController: UIViewController {
         dotPlayerObject.strVideoUrl = strUrl
         dotPlayerObject.isLiveStreaming = true
         self.dotPlayerView.setPlayerObject(dotPlayerObject)
+        self.dotPlayerView.delegate = self
         
         
 //        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 40))
@@ -69,4 +70,33 @@ class DetailViewController: UIViewController {
 
 
 }
+
+
+extension DetailViewController: DotPlayerViewDelegate {
+    func didPlayerBecomeReady(_ dotPlayerObject: DotPlayerObject) {
+        
+    }
+    func didFailedToLoadPlayer(_ dotPlayerObject: DotPlayerObject) {
+        
+    }
+    func didPlayDotPlayerVideo(_ dotPlayerObject: DotPlayerObject) {
+        
+    }
+    func didPauseDotPlayerVideo(_ dotPlayerObject: DotPlayerObject) {
+        
+    }
+    //    func didResumeDotPlayerVideo(_ dotPlayerObject: DotPlayerObject)
+    func didEndPlaybackDotPlayerVideo(_ dotPlayerObject: DotPlayerObject) {
+        
+    }
+
+    func didTriggerActionForCastButton(_ dotPlayerObject: DotPlayerObject) {
+        
+    }
+    func didTriggerActionForShareButton(_ dotPlayerObject: DotPlayerObject) {
+        
+    }
+    
+}
+
 
